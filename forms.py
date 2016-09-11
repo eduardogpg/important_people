@@ -10,7 +10,7 @@ from models import User
 
 def length_honeypot(form, field):
 	if len(field.data) > 0:
-		raise validators.ValidationError('Lo siento bot no vas a pasar')
+		raise validators.ValidationError('Este campo debe de estar vacio!')
 
 class LoginForm(Form):
 	username = TextField('Username',[validators.Required(message = 'El username es requerido')])
@@ -28,13 +28,11 @@ class CreateForm(Form):
 	password = PasswordField('Password', [validators.Required(message='El password es requerido')])
 	honeypot = HiddenField("",[ length_honeypot ])
 
-	
 	def validate_username(form, field):
 	 	username = field.data
 	 	user = User.query.filter_by(username = username).first()
 	 	if user is not None:
 	 		raise validators.ValidationError('El username ya se encuentra registrado!')
-
 
 class CreateArticleForm(Form):
 	pass

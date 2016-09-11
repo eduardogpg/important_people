@@ -28,6 +28,15 @@
       {% endif %}
     {% endwith %}
 
+    {% with messages = messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+            <div class=" {{ message.pre_idetifier }}" role="alert">
+                {{ message.message }}
+            </div>
+        {% endfor %}
+        </ul>
+    {% endwith %}
 
     {% block content %} 
     {% endblock %}

@@ -22,9 +22,15 @@ from forms import CreateForm
 from models import db as database
 from models import User
 
+from common import AdvancedMessage
+
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 csrf = CsrfProtect()
+
+@app.after_request
+def after_request(response):
+	return response
 
 def create_session(username, user_id):
 	session['username'] = username
@@ -68,9 +74,9 @@ def login():
 			return success_authentication(request, user)
 		else:
 			error_message = 'Usuario o password incorrectos.'
-			flash(error_message)
+			AdvancedMessage.add(message = error_message, identifier = 'alert-danger')
 
-	return render_template('login.html', form = login_form)
+	return render_template('login.html', form = login_form, messages  = AdvancedMessage.get_messages())
 
 @app.route('/logout', methods = ['GET'])
 def logout():
