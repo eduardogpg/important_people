@@ -5,4 +5,6 @@ class Config(object):
 
 class DevelopmentConfig(Config):
 	DEBUG = True
-	PORT = 8000
+	SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost/important_people'
+	SQLALCHEMY_TRACK_MODIFICATIONS = False
+
